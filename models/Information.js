@@ -1,0 +1,22 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const informationSchema = new Schema ({
+    infoType:{
+        type:String,
+        enum:["Social","Caring","Nearby","Admin Notices","General"],
+        default: "General"
+    },
+    userOwner: {type: Schema.Types.ObjectId, ref: "User"},
+    publicationDate: Date,
+    multimediaContent: String,
+    textContent: String,
+    comments:[{
+        user: {type: Schema.Types.ObjectId, ref: "User"},
+        textComment: String
+    }],
+    likes:[{type: Schema.Types.ObjectId, ref: "User"}]
+});
+
+const informationModel = mongoose.model("Information", informationSchema);
+module.exports = informationModel;
