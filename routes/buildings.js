@@ -1,15 +1,17 @@
-var express = require("express");
-var router = new express.Router();
+const express = require("express");
+const router = new express.Router();
 const BuildingModel = require("../models/Building");
 
 /* GET users listing. */
 
-router.get("/", function(req, res, next) {
+router.get("/", (req, res, next) => {
   res.send('select a building');
 });
 
-router.get("/:id", function(req, res, next) {
+router.get("/:id", (req, res, next) => {
   BuildingModel.findById(req.params.id)
+    .populate("informations")
+    .populate("users")
     .then(building => {
       console.table("building------------------------------------------------------------------------------------------")
       console.table(building)
@@ -20,4 +22,19 @@ router.get("/:id", function(req, res, next) {
       res.status(500).json(err);
     });
 });
+
+router.post("/:id", (req,res,next) => {
+  res.status(200).json()
+})
+
+
+router.patch("/:id", (req,res,next) => {
+  res.status(200).json()
+})
+
+router.delete("/:id", (req,res,next) => {
+  res.status(200).json()
+})
+
+
 module.exports = router;
