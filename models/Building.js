@@ -10,7 +10,7 @@ const buildingSchema = new Schema ({
     adress: {
         number: Number,
         street: String,
-        postalCode: String,
+        postalcode: String,
         city: String,
         country: String
     },
