@@ -12,8 +12,8 @@ const userSchema = new Schema ({
     },
     role: {
         type: Boolean,
-        required:true,
-        enum: []
+        enum: ["user", "admin", "super admin"],
+        default: "user"
     },
     email: {
         type: String,
@@ -24,7 +24,7 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    id_building: [{
+    buildings: [{
         type: Schema.Types.ObjectId,
         ref: "Building"
     }],

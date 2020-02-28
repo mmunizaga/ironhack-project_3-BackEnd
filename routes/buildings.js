@@ -2,26 +2,25 @@ const express = require("express");
 const router = new express.Router();
 const buildingModel = require("../models/Building");
 
-/* GET users listing. */
-
 router.get("/", (req, res, next) => {
   buildingModel
     .find()
     .populate("informations")
     .populate("users")
-    .then(building => res.status(200).json(building))
+    .then(buildings => res.status(200).json(buildings))
     .catch(next);
 });
 
 router.get("/:id", (req, res, next) => {
   buildingModel
     .findById(req.params.id)
-    .then(data => res.status(200).json(data))
+    // .populate("informations")
+    // .populate("users")
+    .then(building => res.status(200).json(building))
     .catch(next)
 });
 
 router.post("/", (req,res,next) => {
-  console.log("in he back")
   const {name, number, street, postalcode, city, country, keys} = req.body;
   const newBuilding = {
     name,
@@ -48,6 +47,7 @@ router.patch("/:id", (req,res,next) => {
     adress:{
       number,
       street,
+      postalcode,
       city,
       country
     },

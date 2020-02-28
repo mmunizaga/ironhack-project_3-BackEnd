@@ -18,6 +18,8 @@ var corsOptions = {
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var buildingRouter = require('./routes/buildings');
+var informationsRouter = require('./routes/informations');
+var messagesRouter = require('./routes/messages');
 
 
 app.use(logger('dev'));
@@ -30,5 +32,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/buildings', buildingRouter);
+app.use('informations', informationsRouter);
+app.use('messages', messagesRouter);
 
 module.exports = app;
