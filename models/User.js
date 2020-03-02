@@ -24,6 +24,10 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
+    avatar: {
+        type: String,
+        default:"./../../FrontEnd/public/default_avatar.png"
+    },
     buildings: [{
         type: Schema.Types.ObjectId,
         ref: "Building"

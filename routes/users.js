@@ -22,13 +22,14 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post("/",(req, res, next) => {
-  const {name, lastname, role, email, password, newMessages, canMessage, canInfo} = req.body;
+  const {name, lastname, role, email, password, avatar, newMessages, canMessage, canInfo} = req.body;
   const newUser = {
     name,
     lastname,
     role,
     email,
     password,
+    avatar,
     newMessages,
     canMessage,
     canInfo
@@ -41,13 +42,14 @@ router.post("/",(req, res, next) => {
 });
 
 router.patch("/:id", (req, res, next) => {
-  const {name, lastname, role, email, password, newMessages, canMessage, canInfo} = req.body;
+  const {name, lastname, role, email, password, avatar, newMessages, canMessage, canInfo} = req.body;
   const updateUser = {
     name,
     lastname,
     role,
     email,
     password,
+    avatar,
     newMessages,
     canMessage,
     canInfo

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = new express.Router();
 const informationModel = require("../models/Information");
+const uploader = require("./../config/cloudinary");
+
 
 router.get("/", (req, res, next) => {
     informationModel
@@ -20,17 +22,19 @@ router.get("/", (req, res, next) => {
       .catch(next);
   });
 
-  router.post("/", (req, res, next) => {
-      const {infoType, userOwner, publicationsDate, multimediaContent, textContent, comments, likes} = req.body;
+  router.post("/", uploader.single("multimediaContent"), (req, res, next) => {
+      const {category, userOwner, publicationsDate, textContent, comments, likes} = req.body;
+      console.log(req.file)
       const newInformation = {
-        infoType,
+        category,
         userOwner,
         publicationsDate,
-        multimediaContent,
         textContent,
         comments,
         likes
       };
+
+      if(req.file){newInformation.multimediaContent = req.file.secure_url}
 
       informationModel
         .create(newInformation)
@@ -38,10 +42,10 @@ router.get("/", (req, res, next) => {
         .catch(next)
   });
 
-  router.patch("/:id", (req, res, next) => {
-    const {infoType, userOwner, publicationsDate, multimediaContent, textContent, comments, likes} = req.body;
+  router.patch("/:id", uploader.single("multimediaContent"), (req, res, next) => {
+    const {category, userOwner, publicationsDate, multimediaContent, textContent, comments, likes} = req.body;
     const updateInformation = {
-      infoType,
+      category,
       userOwner,
       publicationsDate,
       multimediaContent,

@@ -32,7 +32,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/buildings', buildingRouter);
-app.use('informations', informationsRouter);
-app.use('messages', messagesRouter);
+app.use('/informations', informationsRouter);
+app.use('/messages', messagesRouter);
 
 module.exports = app;
