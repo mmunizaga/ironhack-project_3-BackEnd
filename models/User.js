@@ -6,12 +6,12 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    lastaname: {
+    lastname: {
         type: String,
         required: true
     },
     role: {
-        type: Boolean,
+        type: String,
         enum: ["user", "admin", "super admin"],
         default: "user"
     },
@@ -30,7 +30,7 @@ const userSchema = new Schema ({
     buildings: [{
         type: Schema.Types.ObjectId,
         ref: "Building",
-        // required: true
+        required: true
     }],
     newMessages:Number,
     messages: [{
