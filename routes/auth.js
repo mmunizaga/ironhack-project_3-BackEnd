@@ -84,16 +84,21 @@ router.get("/signout", (req, res, next) => {
 
 router.use("/is-loggedin", (req, res, next) => {
   if (req.session.currentUser) {
-    const { _id, username, favorites, email, avatar, role } = req.session.currentUser;
+    const { _id, name, lastname, role, email, avatar, buildings, newMessages, messages, canMessage, canInfo } = req.session.currentUser;
 
     return res.status(200).json({
       currentUser: {
         _id,
-        username,
+        name,
+        lastname,
+        role,
         email,
         avatar,
-        favorites,
-        role
+        buildings,
+        newMessages,
+        messages,
+        canMessage,
+        canInfo
       }
     });
   } else res.status(403).json("err: not logged in");
