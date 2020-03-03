@@ -11,7 +11,6 @@ const informationSchema = new Schema ({
     publicationDate: Date,
     multimediaContent: {
         type: String,
-        default:"https://images.app.goo.gl/TYeFPxq989ETHiKq9"
     },
     textContent: String,
     comments:[{
