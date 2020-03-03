@@ -59,6 +59,18 @@ router.patch("/:id", (req,res,next) => {
     .catch(next)
 });
 
+router.patch("/key/:id", (req,res,next) => {
+  console.log("jsuis dsans l'back",req.body)
+  const {key} = req.body;
+  const updateBuilding = {
+    keys:[key]
+  }
+  
+  buildingModel.findByIdAndUpdate(req.params.id, { $push: { keys: updateBuilding.keys[0] } }, {new:true})
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next)
+});
+
 router.delete("/:id", (req,res,next) => {
   buildingModel.findByIdAndDelete(req.params.id)
     .then(dbRes => res.status(200).json(dbRes))
