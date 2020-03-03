@@ -1,8 +1,6 @@
 var express = require("express");
 var router = new express.Router();
 const userModel = require("../models/User");
-const buildingModel = require("../models/Building");
-const uploader = require("./../config/cloudinary");
 
 router.get("/", function(req, res, next) {
   userModel
@@ -19,45 +17,6 @@ router.get("/:id", function(req, res, next) {
     .populate("buildings")
     .populate("messages")
     .then(user => res.status(200).json(user))
-    .catch(next);
-});
-
-router.post("/", uploader.single("avatar"), (req, res, next) => {
-  const { name, lastname, email, password, key } = req.body;
-  if (!key) {
-    return res.status(400).json("You need to provide a key");
-  }
-
-  const newUser = {
-    name,
-    lastname,
-    email,
-    password
-  };
-
-  if (req.file) {
-    newUser.avatar = req.file.secure_url;
-  }
-
-  buildingModel
-    .findOne({ keys: key })
-    .then(building => {
-      if (building === null) {
-        return res.status(400).json("Invalid key");
-      }
-      newUser.buildings = [building._id];
-      userModel
-        .create(newUser)
-        .then(createdUser => {
-          buildingModel
-            .findByIdAndUpdate(building._id, { $pull: { keys: key }})
-            .then(updatedBuilding => {
-              res.status(200).json(createdUser);
-            })
-            .catch(next);
-        })
-        .catch(next);
-    })
     .catch(next);
 });
 
