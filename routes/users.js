@@ -1,6 +1,8 @@
 var express = require('express');
 var router = new express.Router();
 const userModel = require("../models/User");
+const buildingModel = require("../models/Building");
+const uploader = require("./../config/cloudinary");
 
 
 router.get('/', function(req, res, next) {
@@ -21,18 +23,21 @@ router.get('/:id', function(req, res, next) {
     .catch(next);
 });
 
-router.post("/",(req, res, next) => {
-  const {name, lastname, role, email, password, avatar, newMessages, canMessage, canInfo} = req.body;
+router.post("/", uploader.single("avatar"), (req, res, next) => {
+  const {name, lastname, email, password, avatar, key} = req.body;
+
+  buildingModel
+  .findOneAndUpdate({keys:{$in:[key]}},{$pull:{keys:[key]}})
+  .then(dbRes => console.log(dbRes))
+  .catch(next)
+
   const newUser = {
     name,
     lastname,
-    role,
     email,
     password,
     avatar,
-    newMessages,
-    canMessage,
-    canInfo
+    // buildings
   };
 
   userModel
@@ -42,7 +47,7 @@ router.post("/",(req, res, next) => {
 });
 
 router.patch("/:id", (req, res, next) => {
-  const {name, lastname, role, email, password, avatar, newMessages, canMessage, canInfo} = req.body;
+  const {name, lastname, role, email, password, avatar, buildings, newMessages, canMessage, canInfo} = req.body;
   const updateUser = {
     name,
     lastname,
@@ -50,6 +55,7 @@ router.patch("/:id", (req, res, next) => {
     email,
     password,
     avatar,
+    buildings,
     newMessages,
     canMessage,
     canInfo

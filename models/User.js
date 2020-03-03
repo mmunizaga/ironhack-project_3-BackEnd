@@ -25,12 +25,12 @@ const userSchema = new Schema ({
         required: true
     },
     avatar: {
-        type: String,
-        default:"./../../FrontEnd/public/default_avatar.png"
+        type: String
     },
     buildings: [{
         type: Schema.Types.ObjectId,
-        ref: "Building"
+        ref: "Building",
+        // required: true
     }],
     newMessages:Number,
     messages: [{

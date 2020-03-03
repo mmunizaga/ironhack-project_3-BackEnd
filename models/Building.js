@@ -15,7 +15,6 @@ const buildingSchema = new Schema ({
         country: String
     },
     informations: [{type: Schema.Types.ObjectId, ref:"Information"}],
-    users: [{type: Schema.Types.ObjectId, ref: "User"}],
     keys:{
         type: [String],
         validate: () => true
