@@ -1,6 +1,7 @@
 var express = require("express");
 var router = new express.Router();
 const userModel = require("../models/User");
+const uploader = require("./../config/cloudinary");
 
 router.get("/", function(req, res, next) {
   userModel
@@ -16,18 +17,21 @@ router.get("/:id", function(req, res, next) {
     .findById(req.params.id)
     .populate("buildings")
     .populate("messages")
-    .then(user => res.status(200).json(user))
+    .then(dbRes => { 
+      let user = dbRes;
+      user.password = ""
+      res.status(200).json(user)})
     .catch(next);
 });
 
-router.patch("/:id", (req, res, next) => {
+router.patch("/:id",uploader.single("avatar"), (req, res, next) => {
+  console.log(req.body);
   const {
     name,
     lastname,
     role,
     email,
     password,
-    avatar,
     buildings,
     newMessages,
     canMessage,
@@ -39,13 +43,14 @@ router.patch("/:id", (req, res, next) => {
     role,
     email,
     password,
-    avatar,
     buildings,
     newMessages,
     canMessage,
     canInfo
   };
 
+  if(req.file) updateUser.avatar = req.file.secure_url;
+ 
   userModel
     .findByIdAndUpdate(req.params.id, updateUser, { new: true })
     .then(dbRes => res.status(200).json(dbRes))

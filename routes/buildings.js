@@ -6,7 +6,6 @@ router.get("/", (req, res, next) => {
   buildingModel
     .find()
     .populate("informations")
-    .populate("users")
     .then(buildings => res.status(200).json(buildings))
     .catch(next);
 });
@@ -15,13 +14,12 @@ router.get("/:id", (req, res, next) => {
   buildingModel
     .findById(req.params.id)
     // .populate("informations")
-    // .populate("users")
     .then(building => res.status(200).json(building))
     .catch(next)
 });
 
 router.post("/", (req,res,next) => {
-  const {name, number, street, postalcode, city, country, keys} = req.body;
+  const {name, number, street, postalcode, city, country} = req.body;
   const newBuilding = {
     name,
     adress:{
@@ -30,8 +28,7 @@ router.post("/", (req,res,next) => {
       city,
       postalcode,
       country
-    },
-    keys
+    }
   };
 
   buildingModel
@@ -77,7 +74,8 @@ router.patch("/key/:id/delete", (req,res,next) => {
     .catch(next)
 });
 
-router.delete("/:id", (req,res,next) => {
+
+router.delete("/delete/:id", (req,res,next) => {
   buildingModel.findByIdAndDelete(req.params.id)
     .then(dbRes => res.status(200).json(dbRes))
     .catch(next)
