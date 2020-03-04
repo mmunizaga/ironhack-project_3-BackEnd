@@ -71,6 +71,12 @@ router.patch("/key/:id", (req,res,next) => {
     .catch(next)
 });
 
+router.patch("/key/:id/delete", (req,res,next) => {
+  buildingModel.findByIdAndUpdate(req.params.id, {keys:req.body.newKeys}, {new:true})
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next)
+});
+
 router.delete("/:id", (req,res,next) => {
   buildingModel.findByIdAndDelete(req.params.id)
     .then(dbRes => res.status(200).json(dbRes))
