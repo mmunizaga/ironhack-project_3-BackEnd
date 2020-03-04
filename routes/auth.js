@@ -76,8 +76,10 @@ router.post("/signin", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/signout", (req, res, next) => {
+router.post("/signout", (req, res, next) => {
+  
   req.session.destroy(err => {
+    console.log("LOGGED OUT");
     res.status(200);
   });
 });

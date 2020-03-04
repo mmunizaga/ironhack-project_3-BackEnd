@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
   buildingModel
     .findById(req.params.id)
-    // .populate("informations")
+    .populate("informations")
     .then(building => res.status(200).json(building))
     .catch(next)
 });
