@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 router.post("/signup", uploader.single("avatar"), (req, res, next) => {
-  return res.send("oki");
+
   const { name, lastname, email, password, key } = req.body;
 
   if (!name || !lastname || !email || !password) {
@@ -26,6 +26,7 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
     email,
     password: hashPass
   };
+  return res.send("oki");
 
   if (req.file) {
     newUser.avatar = req.file.secure_url;
