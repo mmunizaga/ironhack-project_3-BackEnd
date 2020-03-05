@@ -1,7 +1,7 @@
 var express = require("express");
 var router = new express.Router();
-const userModel = require("../models/User");
-const buildingModel = require("../models/Building");
+const userModel = require("./../models/User");
+const buildingModel = require("./../models/Building");
 const uploader = require("./../config/cloudinary");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
@@ -30,16 +30,17 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
   if (req.file) {
     newUser.avatar = req.file.secure_url;
   }
+  // return res.send("oki");
 
   buildingModel
     .findOne({ keys: key })
     .then(building => {
-      return res.send("oki");
+      //NOT HERE -------------------------------------
       if (building === null) {
         return res.status(400).json("Invalid key");
       }
       newUser.buildings = [building._id];
-//NOT HERE
+
       userModel
         .create(newUser)
         .then(createdUser => {
