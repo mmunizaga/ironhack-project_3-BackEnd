@@ -26,7 +26,6 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
     email,
     password: hashPass
   };
-  return res.send("oki");
 
   if (req.file) {
     newUser.avatar = req.file.secure_url;
@@ -39,6 +38,7 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
         return res.status(400).json("Invalid key");
       }
       newUser.buildings = [building._id];
+      return res.send("oki");
 
       userModel
         .create(newUser)
