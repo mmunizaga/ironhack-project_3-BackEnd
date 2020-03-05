@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const informationModel = require("../models/Information");
+const informationModel = require("./../models/Information");
 const uploader = require("./../config/cloudinary");
 var moment = require("moment");
 const buildingModel = require("../models/Building");

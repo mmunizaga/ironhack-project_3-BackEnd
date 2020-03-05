@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
-const messageModel = require("../models/Message");
-const userModel = require("../models/User");
+const messageModel = require("./../models/Message");
+const userModel = require("./../models/User");
 
 router.get("/", (req, res, next) => {
   messageModel

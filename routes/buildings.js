@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const buildingModel = require("../models/Building");
+const buildingModel = require("./../models/Building");
 
 router.get("/", (req, res, next) => {
   buildingModel
