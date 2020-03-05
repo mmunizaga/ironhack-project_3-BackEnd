@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 router.post("/signup", uploader.single("avatar"), (req, res, next) => {
-
   const { name, lastname, email, password, key } = req.body;
 
   if (!name || !lastname || !email || !password) {
@@ -30,21 +29,21 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
   if (req.file) {
     newUser.avatar = req.file.secure_url;
   }
-  
+  console.log("before building model");
   buildingModel
-  .findOne({ keys: key })
-  .then(building => {
-    //NOT HERE -------------------------------------
-    if (building === null) {
-      return res.status(400).json("Invalid key");
-    }
-    newUser.buildings = [building._id];
-    
-    userModel
-    .create(newUser)
-    .then(createdUser => {
-      return res.send("dans le model 1");
-      buildingModel
+    .findOne({ keys: key })
+    .then(building => {
+      console.log("here");
+      if (building === null) {
+        return res.status(400).json("Invalid key");
+      }
+      newUser.buildings = [building._id];
+
+      userModel
+        .create(newUser)
+        .then(createdUser => {
+          return res.send("dans le model 1");
+          buildingModel
             .findByIdAndUpdate(building._id, { $pull: { keys: key } })
             .then(updatedBuilding => {
               res.status(200).json(createdUser);
