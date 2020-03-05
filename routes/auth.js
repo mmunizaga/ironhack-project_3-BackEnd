@@ -30,21 +30,21 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
   if (req.file) {
     newUser.avatar = req.file.secure_url;
   }
-  // return res.send("oki");
-
+  
   buildingModel
-    .findOne({ keys: key })
-    .then(building => {
-      //NOT HERE -------------------------------------
-      if (building === null) {
-        return res.status(400).json("Invalid key");
-      }
-      newUser.buildings = [building._id];
-
-      userModel
-        .create(newUser)
-        .then(createdUser => {
-          buildingModel
+  .findOne({ keys: key })
+  .then(building => {
+    //NOT HERE -------------------------------------
+    if (building === null) {
+      return res.status(400).json("Invalid key");
+    }
+    newUser.buildings = [building._id];
+    
+    userModel
+    .create(newUser)
+    .then(createdUser => {
+      return res.send("dans le model 1");
+      buildingModel
             .findByIdAndUpdate(building._id, { $pull: { keys: key } })
             .then(updatedBuilding => {
               res.status(200).json(createdUser);
