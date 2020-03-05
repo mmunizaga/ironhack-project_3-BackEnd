@@ -55,9 +55,7 @@ router.post("/", uploader.single("multimediaContent"), (req, res, next) => {
   informationModel
     .create(newInformation)
     .then(dbRes => {
-      res.status(200).json(dbRes);
-      console.log("ID KEY =>",dbRes._id );
-      
+      res.status(200).json(dbRes);    
       buildingModel
         .findByIdAndUpdate(
           req.body.buildings,

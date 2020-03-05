@@ -76,6 +76,14 @@ router.patch("/admin_edit/:id",uploader.single("avatar"), (req, res, next) => {
     .catch(next);
 });
 
+router.patch("/no-new-messages/:id", (req, res, next) => {
+
+  userModel
+    .findByIdAndUpdate(req.params.id, {newMessages:0}, { new: true })
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next);
+});
+
 router.delete("/id", (req, res, next) => {
   userModel
     .findByIdAndDelete(req.params.id)
