@@ -34,12 +34,12 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
   buildingModel
     .findOne({ keys: key })
     .then(building => {
+      return res.send("oki");
       if (building === null) {
         return res.status(400).json("Invalid key");
       }
       newUser.buildings = [building._id];
-      return res.send("oki");
-
+//NOT HERE
       userModel
         .create(newUser)
         .then(createdUser => {
