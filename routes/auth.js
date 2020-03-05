@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 router.post("/signup", uploader.single("avatar"), (req, res, next) => {
+  return res.send("oki");
   const { name, lastname, email, password, key } = req.body;
 
   if (!name || !lastname || !email || !password) {
@@ -77,7 +78,6 @@ router.post("/signin", (req, res, next) => {
 });
 
 router.post("/signout", (req, res, next) => {
-  
   req.session.destroy(err => {
     console.log("LOGGED OUT");
     res.status(200);
@@ -86,7 +86,19 @@ router.post("/signout", (req, res, next) => {
 
 router.use("/is-loggedin", (req, res, next) => {
   if (req.session.currentUser) {
-    const { _id, name, lastname, role, email, avatar, buildings, newMessages, messages, canMessage, canInfo } = req.session.currentUser;
+    const {
+      _id,
+      name,
+      lastname,
+      role,
+      email,
+      avatar,
+      buildings,
+      newMessages,
+      messages,
+      canMessage,
+      canInfo
+    } = req.session.currentUser;
 
     return res.status(200).json({
       currentUser: {
